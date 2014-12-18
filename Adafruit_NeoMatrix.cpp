@@ -66,7 +66,7 @@ uint16_t Adafruit_NeoMatrix::Color(uint8_t r, uint8_t g, uint8_t b) {
                     (b         >> 3);
 }
 
-void Adafruit_NeoMatrix::drawPixel(int16_t x, int16_t y, uint16_t color) {
+void Adafruit_NeoMatrix::drawPixel(int16_t x, int16_t y, uint16_t color, int16_t bright) {
 
   if((x < 0) || (y < 0) || (x >= _width) || (y >= _height)) return;
 
@@ -164,8 +164,13 @@ void Adafruit_NeoMatrix::drawPixel(int16_t x, int16_t y, uint16_t color) {
       else          pixelOffset =  major      * majorScale     + minor;
     }
   }
-
-  setPixelColor(tileOffset + pixelOffset, expandColor(color));
+  setPixelColor(tileOffset + pixelOffset, expandColor(color),bright);
+/*  
+  if ((bright > -1) && (bright < 256))
+    setPixelColorB(tileOffset + pixelOffset, expandColor(color),bright);
+  else
+    setPixelColor(tileOffset + pixelOffset, expandColor(color));
+*/ // original test
 }
 
 void Adafruit_NeoMatrix::fillScreen(uint16_t color) {
